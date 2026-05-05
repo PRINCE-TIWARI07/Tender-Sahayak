@@ -1,0 +1,37 @@
+{
+  "name": "crpf-tender-upload-server",
+  "version": "1.0.0",
+  "description": "Basic Node.js and Express server with file upload support.",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/server.js",
+  "scripts": {
+    "build": "vite build",
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "dev:frontend": "vite --host 127.0.0.1",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test test/*.test.js",
+    "test:ci": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^4.18.3",
+    "lucide-react": "^1.14.0",
+    "multer": "^2.1.1",
+    "openai": "^6.35.0",
+    "pdf-parse": "^2.4.5",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.14",
+    "supertest": "^7.2.2",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.0.10"
+  }
+}

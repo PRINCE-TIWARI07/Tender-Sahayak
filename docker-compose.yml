@@ -1,0 +1,19 @@
+# Local / small-VPS deployment: build and run with a persistent uploads volume.
+services:
+  web:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "3000"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      OPENAI_MODEL: "${OPENAI_MODEL:-gpt-5.4-mini}"
+      OCR_LANG: "${OCR_LANG:-eng}"
+      MAX_ANALYSIS_CHARACTERS: "${MAX_ANALYSIS_CHARACTERS:-100000}"
+    volumes:
+      - tender_uploads:/app/uploads
+    restart: unless-stopped
+
+volumes:
+  tender_uploads:

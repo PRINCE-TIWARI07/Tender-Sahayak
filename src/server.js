@@ -2,6 +2,8 @@ require("dotenv").config({ quiet: true });
 
 const express = require("express");
 const { readFile } = require("fs/promises");
+const { mkdirSync } = require("fs");
+const os = require("os");
 const multer = require("multer");
 const OpenAI = require("openai");
 const path = require("path");
@@ -28,9 +30,11 @@ let ocrWorkerPromise;
 let ocrQueue = Promise.resolve();
 let openaiClient;
 
+const uploadsDir = process.env.UPLOADS_DIR || path.join(os.tmpdir(), "crpf-tender-uploads");
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, path.join(__dirname, "..", "uploads"));
+    mkdirSync(uploadsDir, { recursive: true });
+    cb(null, uploadsDir);
   },
   filename: (_req, file, cb) => {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -1292,10 +1296,10 @@ async function analyzeEligibilityCriteria(extractedText) {
 }
 
 app.use(express.json({ limit: "1mb" }));
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(express.static(path.join(__dirname, "..", "dist")));
 
 app.get("/", (_req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
 });
 
 app.get("/health", (_req, res) => {
